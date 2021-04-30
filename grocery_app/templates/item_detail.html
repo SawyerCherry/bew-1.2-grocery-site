@@ -11,15 +11,20 @@
 
 <p><strong>Store:</strong> {{ item.store.title }}</p>
 
+<h3>Created By: <span style="font-weight: 100;">{{ created_by_user.username }}</span></h3>
+
+<form method="POST" action="{{ url_for('main.add_to_shopping_list', item_id=item.id) }}">
+    <button>Add to Shopping List</button>
+</form>
+
 
 <h2>Edit Item</h2>
 
 <form method="POST" action="{{ url_for('main.item_detail', item_id=item.id) }}">
+    {{ form.csrf_token }}
     <fieldset>
         <legend>Please enter your information:</legend>
 
-        <!-- TODO: Remove the next paragraph and use the `form` object passed in 
-            from the route to render a form. -->
         {{ form.name.label }}
         {{ form.name }}
 
@@ -54,6 +59,7 @@
         {% for error in form.store.errors %}
         <li style="color: red">{{ error }}</li>
         {% endfor %}
+
 
         {{ form.submit }}
     </fieldset>
